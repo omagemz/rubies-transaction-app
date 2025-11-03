@@ -128,7 +128,7 @@ const AddTransactionModal = ({ isOpen, toggle, editData }) => {
             <div className="mt-2">
               <small className="text-muted">Quick add:</small>
               <div className="mt-1">
-                {['🛒 Groceries','🍔 Talabat','💵 Payment','📦 Others'].map((p) => (
+                {['🛒 Groceries','🍔 Talabat','💵 Payment','🏢 Work'].map((p) => (
                   <Button
                     key={p}
                     color="light"

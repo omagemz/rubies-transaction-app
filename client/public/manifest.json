@@ -1,0 +1,21 @@
+{
+  "name": "Rubies Expense Tracker",
+  "short_name": "Rubies",
+  "description": "Track your expenses and income with Rubies",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

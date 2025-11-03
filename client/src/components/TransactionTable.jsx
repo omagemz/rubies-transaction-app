@@ -5,6 +5,8 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
 
   const [sortBy, setSortBy] = useState('date'); // 'date' | 'amount'
   const [order, setOrder] = useState('desc'); // 'asc' | 'desc'
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const sorted = useMemo(() => {
     const copy = [...transactions];
@@ -24,18 +26,34 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
     return copy;
   }, [transactions, sortBy, order]);
 
-  const toggleOrder = () => setOrder((o) => (o === 'asc' ? 'desc' : 'asc'));
+  // Pagination calculations
+  const totalPages = Math.ceil(sorted.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedData = sorted.slice(startIndex, endIndex);
+
+  // Reset to page 1 when sorting changes
+  const handleSortChange = (newSortBy) => {
+    setSortBy(newSortBy);
+    setCurrentPage(1);
+  };
+
+  const handleOrderToggle = () => {
+    setOrder((o) => (o === 'asc' ? 'desc' : 'asc'));
+    setCurrentPage(1);
+  };
+
 
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-2">
         <div className="d-flex align-items-center">
           <label className="me-2 mb-0">Sort by:</label>
-          <select className="form-select form-select-sm me-2" style={{ width: 140 }} value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <select className="form-select form-select-sm me-2" style={{ width: 140 }} value={sortBy} onChange={(e) => handleSortChange(e.target.value)}>
             <option value="date">Date</option>
             <option value="amount">Amount</option>
           </select>
-          <button className="btn btn-sm btn-outline-secondary" onClick={toggleOrder} title="Toggle order">
+          <button className="btn btn-sm btn-outline-secondary" onClick={handleOrderToggle} title="Toggle order">
             {sortBy === 'date' ? (order === 'desc' ? 'New → Old' : 'Old → New') : (order === 'desc' ? 'High → Low' : 'Low → High')}
           </button>
         </div>
@@ -53,7 +71,7 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
             </tr>
           </thead>
           <tbody>
-            {sorted.map((t) => {
+            {paginatedData.map((t) => {
               const isExpense = Number(t.amount) < 0;
               const rowClass = isExpense ? 'expense-row' : 'income-row';
               return (
@@ -80,7 +98,7 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
 
       {/* Mobile: stacked cards */}
       <div className="d-block d-sm-none">
-        {sorted.map((t) => (
+        {paginatedData.map((t) => (
           <div className="card transaction-card" key={t._id}>
             <div className="d-flex justify-content-between align-items-start mb-2">
               <div>
@@ -102,6 +120,43 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
           </div>
         ))}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="d-flex justify-content-center align-items-center mt-4 gap-2">
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            ««
+          </button>
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+          >
+            ‹ Prev
+          </button>
+          <span className="mx-2">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+          >
+            Next ›
+          </button>
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            »»
+          </button>
+        </div>
+      )}
     </>
   );
 };

@@ -30,6 +30,17 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Ensure all text elements use theme colors */
+p {
+  color: var(--text-primary);
+}
+
+.text-muted,
+.text-muted.small,
+small.text-muted {
+  color: var(--text-secondary) !important;
+}
+
 .container {
   padding: 1rem;
   max-width: 1200px;
@@ -90,6 +101,7 @@ body {
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  color: white;
 }
 
 .balance-amount {
@@ -132,6 +144,14 @@ body {
   margin-bottom: 0.75rem;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
+}
+
+.transaction-card p {
+  color: var(--text-primary);
+}
+
+.transaction-card .text-muted {
+  color: var(--text-secondary) !important;
 }
 
 /* Table styling */
@@ -236,12 +256,20 @@ body {
   color: #1a1a1a !important;
 }
 
+.calendar-transactions .text-muted {
+  color: #6c757d !important;
+}
+
 .calendar-transactions .list-group-item {
   background: #f8f9fa;
   border: 1px solid #dee2e6;
   margin-bottom: 0.5rem;
   border-radius: 6px;
   color: #1a1a1a;
+}
+
+.calendar-transactions .list-group-item .text-muted {
+  color: #6c757d !important;
 }
 
 /* Dark mode calendar adjustments */
@@ -254,10 +282,18 @@ body {
   color: #ffffff !important;
 }
 
+:root[data-theme="dark"] .calendar-transactions .text-muted {
+  color: #b8b8b8 !important;
+}
+
 :root[data-theme="dark"] .calendar-transactions .list-group-item {
   background: #1a1a1a;
   border-color: #404040;
   color: #ffffff;
+}
+
+:root[data-theme="dark"] .calendar-transactions .list-group-item .text-muted {
+  color: #b8b8b8 !important;
 }
 
 :root[data-theme="dark"] .react-calendar {
@@ -274,4 +310,36 @@ body {
 
 :root[data-theme="dark"] .react-calendar__navigation button {
   color: #ffffff !important;
+}
+
+/* Modal styling for dark mode */
+:root[data-theme="dark"] .modal-content {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+:root[data-theme="dark"] .modal-header,
+:root[data-theme="dark"] .modal-footer {
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .modal-body p,
+:root[data-theme="dark"] .modal-body label {
+  color: var(--text-primary);
+}
+
+/* Form controls in dark mode */
+:root[data-theme="dark"] .form-control,
+:root[data-theme="dark"] .form-select {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+:root[data-theme="dark"] .form-control:focus,
+:root[data-theme="dark"] .form-select:focus {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: #667eea;
 }

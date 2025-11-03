@@ -63,7 +63,7 @@ const Dashboard = () => {
     return (
         <div className="container">
             <div className="text-center mb-3">
-                <h1 className="fs-3 fw-bold mb-2">💎 Rubies Expense Tracker</h1>
+                <h1 className="fs-3 fw-bold mb-2">💎 Rupies Tracker</h1>
                 <div className={`balance ${total < 0 ? 'text-danger' : 'text-success'}`}>
                     Balance: {total.toFixed(2)} OMR
                 </div>

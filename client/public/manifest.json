@@ -1,7 +1,7 @@
 {
-  "name": "Rubies Expense Tracker",
-  "short_name": "Rubies",
-  "description": "Track your expenses and income with Rubies",
+  "name": "Rupies Tracker",
+  "short_name": "Rupies",
+  "description": "Track your expenses and income with Rupies",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a1a",

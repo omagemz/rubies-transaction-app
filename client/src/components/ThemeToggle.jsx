@@ -6,22 +6,36 @@ const ThemeToggle = () => {
   useEffect(() => {
     // Load theme from localStorage or default to dark
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = savedTheme === 'dark' || savedTheme === null;
+    const prefersDark = savedTheme !== 'light'; // Default to dark unless explicitly set to light
     setIsDark(prefersDark);
-    document.body.classList.toggle('light-mode', !prefersDark);
+    
+    if (prefersDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = !isDark;
-    setIsDark(newTheme);
-    document.body.classList.toggle('light-mode', !newTheme);
-    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    
+    if (newIsDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
   };
 
   return (
-    <button className="theme-toggle" onClick={toggleTheme}>
-      {isDark ? '🌙' : '☀️'}
-      <span>{isDark ? 'Dark' : 'Light'}</span>
+    <button 
+      className="btn btn-outline-secondary theme-toggle-btn" 
+      onClick={toggleTheme}
+      title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+    >
+      {isDark ? '☀️' : '🌙'}
     </button>
   );
 };

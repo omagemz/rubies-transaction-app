@@ -53,17 +53,27 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
             </tr>
           </thead>
           <tbody>
-            {sorted.map((t) => (
-              <tr key={t._id}>
-                <td className={Number(t.amount) < 0 ? 'text-danger' : 'text-success'}>{t.amount} OMR</td>
-                <td>{t.description || '-'}</td>
-                <td>{t.date ? new Date(t.date).toLocaleString() : '-'}</td>
-                <td>
-                  <button className="btn btn-sm btn-outline-primary me-2" onClick={() => onEdit && onEdit(t)}>Edit</button>
-                  <button className="btn btn-sm btn-outline-danger" onClick={() => onDelete && onDelete(t._id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
+            {sorted.map((t) => {
+              const isExpense = Number(t.amount) < 0;
+              const rowClass = isExpense ? 'expense-row' : 'income-row';
+              return (
+                <tr key={t._id} className={rowClass}>
+                  <td>
+                    <strong>{isExpense ? '−' : '+'}{Math.abs(t.amount).toFixed(2)} OMR</strong>
+                  </td>
+                  <td>{t.description || 'No description'}</td>
+                  <td>{t.date ? new Date(t.date).toLocaleString() : '-'}</td>
+                  <td>
+                    <button className="btn btn-sm btn-outline-primary me-2" onClick={() => onEdit && onEdit(t)}>
+                      ✏️ Edit
+                    </button>
+                    <button className="btn btn-sm btn-outline-danger" onClick={() => onDelete && onDelete(t._id)}>
+                      🗑️ Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -71,16 +81,24 @@ const TransactionTable = ({ transactions = [], onEdit, onDelete }) => {
       {/* Mobile: stacked cards */}
       <div className="d-block d-sm-none">
         {sorted.map((t) => (
-          <div className="card mb-2 p-2 transaction-card" key={t._id}>
-            <div className="d-flex justify-content-between align-items-start">
-              <strong className={Number(t.amount) < 0 ? 'text-danger' : 'text-success'}>{t.amount} OMR</strong>
+          <div className="card transaction-card" key={t._id}>
+            <div className="d-flex justify-content-between align-items-start mb-2">
               <div>
-                <button className="btn btn-sm btn-outline-primary me-2" onClick={() => onEdit && onEdit(t)}>Edit</button>
-                <button className="btn btn-sm btn-outline-danger" onClick={() => onDelete && onDelete(t._id)}>Delete</button>
+                <strong className={`fs-5 ${Number(t.amount) < 0 ? 'text-danger' : 'text-success'}`}>
+                  {Number(t.amount) < 0 ? '−' : '+'}{Math.abs(t.amount).toFixed(2)} OMR
+                </strong>
+                <p className="mb-0 mt-1">{t.description || 'No description'}</p>
+                <small className="text-muted">{t.date ? new Date(t.date).toLocaleDateString() : '-'}</small>
               </div>
             </div>
-            <p className="mb-1">{t.description || '-'}</p>
-            <small className="text-muted">{t.date ? new Date(t.date).toLocaleString() : '-'}</small>
+            <div className="d-flex gap-2 mt-2">
+              <button className="btn btn-sm btn-outline-primary flex-fill" onClick={() => onEdit && onEdit(t)}>
+                ✏️ Edit
+              </button>
+              <button className="btn btn-sm btn-outline-danger flex-fill" onClick={() => onDelete && onDelete(t._id)}>
+                🗑️ Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>

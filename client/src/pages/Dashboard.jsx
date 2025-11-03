@@ -62,14 +62,14 @@ const Dashboard = () => {
 
     return (
         <div className="container">
-            <div className="text-center mb-4">
-                <h1 className="fs-3 fw-bold mb-3">💎 Rubies Expense Tracker</h1>
+            <div className="text-center mb-3">
+                <h1 className="fs-3 fw-bold mb-2">💎 Rubies Expense Tracker</h1>
                 <div className={`balance ${total < 0 ? 'text-danger' : 'text-success'}`}>
                     Balance: {total.toFixed(2)} OMR
                 </div>
             </div>
             
-            <div className="mb-4 text-center">
+            <div className="mb-3 text-center">
                 <button className="btn btn-primary btn-add" onClick={toggleModal}>
                     ➕ Add Transaction
                 </button>

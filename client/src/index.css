@@ -1,13 +1,33 @@
-:root {
+/* Default to dark mode */
+:root,
+:root[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8b8;
+  --border-color: #404040;
+  
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+}
+
+/* Light mode */
+:root[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6c757d;
+  --border-color: #dee2e6;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -34,6 +54,23 @@ body {
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0;
+  color: var(--text-primary);
+}
+
+.theme-toggle-btn {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  border-color: #667eea;
 }
 
 /* Balance Card - Centered */
@@ -84,11 +121,32 @@ body {
   margin-bottom: 3rem;
 }
 
+.table-container h3 {
+  color: var(--text-primary);
+}
+
 /* Transaction cards for mobile */
 .transaction-card {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 0.75rem;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Table styling */
+.table {
+  color: var(--text-primary);
+}
+
+.table thead th {
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.table tbody td {
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 /* Mobile buttons - larger touch targets */
@@ -183,38 +241,37 @@ body {
   border: 1px solid #dee2e6;
   margin-bottom: 0.5rem;
   border-radius: 6px;
+  color: #1a1a1a;
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .calendar-transactions {
-    background: #2d2d2d;
-  }
-  
-  .calendar-transactions h5,
-  .calendar-transactions p {
-    color: #ffffff !important;
-  }
-  
-  .calendar-transactions .list-group-item {
-    background: #1a1a1a;
-    border-color: #404040;
-    color: #ffffff;
-  }
-  
-  .react-calendar {
-    background: #2d2d2d;
-  }
-  
-  .react-calendar__tile {
-    color: #ffffff !important;
-  }
-  
-  .react-calendar__month-view__weekdays {
-    color: #b8b8b8 !important;
-  }
-  
-  .react-calendar__navigation button {
-    color: #ffffff !important;
-  }
+/* Dark mode calendar adjustments */
+:root[data-theme="dark"] .calendar-transactions {
+  background: #2d2d2d;
+}
+
+:root[data-theme="dark"] .calendar-transactions h5,
+:root[data-theme="dark"] .calendar-transactions p {
+  color: #ffffff !important;
+}
+
+:root[data-theme="dark"] .calendar-transactions .list-group-item {
+  background: #1a1a1a;
+  border-color: #404040;
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .react-calendar {
+  background: #2d2d2d;
+}
+
+:root[data-theme="dark"] .react-calendar__tile {
+  color: #ffffff !important;
+}
+
+:root[data-theme="dark"] .react-calendar__month-view__weekdays {
+  color: #b8b8b8 !important;
+}
+
+:root[data-theme="dark"] .react-calendar__navigation button {
+  color: #ffffff !important;
 }

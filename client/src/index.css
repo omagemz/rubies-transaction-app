@@ -21,6 +21,10 @@ body {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   color: #e4e4e7;
   transition: background 0.3s ease, color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2rem;
 }
 
 body.light-mode {
@@ -30,9 +34,10 @@ body.light-mode {
 
 /* Container */
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 600px; /* Mobile-first design */
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 /* Header */
@@ -41,16 +46,20 @@ body.light-mode {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .app-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-align: center;
+  flex: 1;
 }
 
 /* Theme Toggle */
@@ -65,6 +74,7 @@ body.light-mode {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 body.light-mode .theme-toggle {
@@ -86,8 +96,8 @@ body.light-mode .theme-toggle:hover {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   text-align: center;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -106,9 +116,10 @@ body.light-mode .balance-card {
 }
 
 .balance-amount {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   margin: 0.5rem 0;
+  word-break: break-all; /* Prevent overflow on small screens */
 }
 
 .balance-amount.positive {
@@ -128,6 +139,7 @@ body.light-mode .balance-card {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
+  width: 100%;
 }
 
 .btn-primary {
@@ -142,20 +154,20 @@ body.light-mode .balance-card {
 }
 
 .btn-add {
-  width: 100%;
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
   padding: 1rem;
 }
 
-/* Table */
+/* Table Container */
 .table-container {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 1rem;
   backdrop-filter: blur(10px);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
 }
 
 body.light-mode .table-container {
@@ -163,10 +175,18 @@ body.light-mode .table-container {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* Table - Hide on mobile, show cards instead */
 .table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+}
+
+/* Hide desktop table on mobile */
+@media (max-width: 768px) {
+  .table {
+    display: none;
+  }
 }
 
 .table thead th {
@@ -197,7 +217,7 @@ body.light-mode .table tbody tr:hover {
 }
 
 .table tbody td {
-  padding: 1rem;
+  padding: 0.75rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -205,7 +225,7 @@ body.light-mode .table tbody td {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Transaction Cards (Mobile) */
+/* Transaction Cards - Show on mobile */
 .transaction-card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -225,13 +245,21 @@ body.light-mode .transaction-card {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Show cards only on mobile */
+@media (min-width: 769px) {
+  .transaction-card {
+    display: none;
+  }
+}
+
 /* Calendar */
 .calendar-container {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 2rem;
+  padding: 1.5rem;
   backdrop-filter: blur(10px);
+  text-align: center;
 }
 
 body.light-mode .calendar-container {
@@ -244,11 +272,13 @@ body.light-mode .calendar-container {
   background: transparent !important;
   border: none !important;
   color: inherit !important;
+  max-width: 100% !important;
 }
 
 .react-calendar__tile {
   border-radius: 8px !important;
   transition: all 0.2s ease !important;
+  font-size: 0.9rem !important;
 }
 
 .react-calendar__tile:hover {
@@ -266,6 +296,8 @@ body.light-mode .calendar-container {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 16px !important;
   color: #e4e4e7 !important;
+  max-width: 95vw !important;
+  margin: 0 auto !important;
 }
 
 body.light-mode .modal-content {
@@ -276,6 +308,7 @@ body.light-mode .modal-content {
 
 .modal-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 1rem !important;
 }
 
 body.light-mode .modal-header {
@@ -284,6 +317,7 @@ body.light-mode .modal-header {
 
 .modal-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 1rem !important;
 }
 
 body.light-mode .modal-footer {
@@ -296,6 +330,8 @@ body.light-mode .modal-footer {
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   color: #e4e4e7 !important;
   border-radius: 8px !important;
+  font-size: 1rem !important;
+  padding: 0.75rem !important;
 }
 
 body.light-mode .form-control {
@@ -319,8 +355,16 @@ body.light-mode .form-control {
   color: #ef4444 !important;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  body {
+    padding-top: 1rem;
+  }
+  
+  .container {
+    padding: 0.75rem;
+  }
+  
   .app-title {
     font-size: 1.5rem;
   }
@@ -329,7 +373,48 @@ body.light-mode .form-control {
     font-size: 2rem;
   }
   
-  .container {
+  .balance-card {
     padding: 1rem;
+  }
+  
+  .btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .table-container {
+    padding: 0.75rem;
+  }
+  
+  .calendar-container {
+    padding: 1rem;
+  }
+  
+  .modal-content {
+    margin: 1rem !important;
+  }
+}
+
+/* Tablet and larger screens */
+@media (min-width: 769px) {
+  .container {
+    max-width: 800px;
+  }
+  
+  .app-header {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  
+  .app-title {
+    text-align: left;
+    flex: none;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 900px;
   }
 }

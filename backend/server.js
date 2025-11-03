@@ -10,15 +10,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔒 Secret key middleware
-app.use((req, res, next) => {
-  const secret = req.headers.authorization;
-  if (secret !== process.env.API_SECRET) {
-    return res.status(403).json({ message: "Unauthorized" });
-  }
-  next();
-});
-
 // 🔗 MongoDB connection
 if (!process.env.MONGO_URI || process.env.MONGO_URI.includes('your_')) {
   console.error(

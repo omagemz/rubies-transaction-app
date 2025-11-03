@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchTransactions } from "../features/transactionsSlice";
-import AddTransactionModal from "../components/AddTransactionModal";
-import TransactionTable from "../components/TransactionTable";
-import { deleteTransaction } from "../services/api";
-import CalendarView from "../components/CalendarView";
-import ConfirmModal from "../components/ConfirmModal";
-import ThemeToggle from "../components/ThemeToggle";
+import { fetchTransactions } from "../features/transactionsSlice.js";
+import AddTransactionModal from "../components/AddTransactionModal.jsx";
+import TransactionTable from "../components/TransactionTable.jsx";
+import { deleteTransaction } from "../services/api.js";
+import CalendarView from "../components/CalendarView.jsx";
+import ConfirmModal from "../components/ConfirmModal.jsx";
+
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Dashboard = () => {
 
     const toggleModal = () => {
         setModalOpen(!modalOpen);
-        if (!modalOpen) setEditData(null);
+        if (!modalOpen) setEditData(null); // reset edit data when opening new
     };
 
     const handleEdit = (transaction) => {
@@ -38,6 +38,7 @@ const Dashboard = () => {
     };
 
     const handleDelete = async (id) => {
+        // legacy: open confirm modal
         openDeleteConfirm(id);
     };
 
@@ -60,39 +61,27 @@ const Dashboard = () => {
 
     return (
         <div className="container">
-            {/* Header */}
-            <div className="app-header">
-                <h1 className="app-title">💎 Rubies</h1>
-                <ThemeToggle />
-            </div>
-
-            {/* Balance Card */}
-            <div className="balance-card">
-                <div className="balance-label">Current Balance</div>
-                <div className={`balance-amount ${total >= 0 ? 'positive' : 'negative'}`}>
-                    {total.toFixed(2)} OMR
-                </div>
-                <div style={{ opacity: 0.6, fontSize: '0.9rem', marginTop: '0.5rem' }}>
-                    {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
+            <div className="text-center mb-4">
+                <h1 className="fs-3 fw-bold mb-3">💎 Rubies Expense Tracker</h1>
+                <div className={`balance ${total < 0 ? 'text-danger' : 'text-success'}`}>
+                    Balance: {total.toFixed(2)} OMR
                 </div>
             </div>
-
-            {/* Add Transaction Button */}
-            <button className="btn btn-primary btn-add" onClick={toggleModal}>
-                ➕ Add Transaction
-            </button>
-
-            {/* Transactions Table */}
-            <div className="table-container">
-                <h3 style={{ marginBottom: '1.5rem', fontSize: '1.3rem' }}>📊 Transactions</h3>
+            
+            <div className="mb-4 text-center">
+                <button className="btn btn-primary btn-add" onClick={toggleModal}>
+                    ➕ Add Transaction
+                </button>
+            </div>
+            
+            <div className="mb-4">
                 <TransactionTable
                     transactions={transactions}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                 />
             </div>
-
-            {/* Modals */}
+            
             <AddTransactionModal isOpen={modalOpen} toggle={toggleModal} editData={editData} />
             <ConfirmModal
                 isOpen={confirmOpen}
@@ -104,12 +93,12 @@ const Dashboard = () => {
                 confirmText="Delete"
                 cancelText="Cancel"
             />
-
-            {/* Calendar View */}
-            <div className="calendar-container">
+            
+            <div className="mt-5">
                 <CalendarView transactions={transactions} />
             </div>
         </div>
+
     );
 };
 

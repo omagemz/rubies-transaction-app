@@ -17,6 +17,7 @@ const Dashboard = () => {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [toDeleteId, setToDeleteId] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
         dispatch(fetchTransactions());
@@ -81,6 +82,15 @@ const Dashboard = () => {
                     onDelete={handleDelete}
                 />
             </div>
+
+            <div className="text-center mb-4">
+                <button 
+                    className="btn btn-outline-primary" 
+                    onClick={() => setShowCalendar(!showCalendar)}
+                >
+                    {showCalendar ? '📅 Hide Calendar View' : '📅 Show Calendar View'}
+                </button>
+            </div>
             
             <AddTransactionModal isOpen={modalOpen} toggle={toggleModal} editData={editData} />
             <ConfirmModal
@@ -94,9 +104,11 @@ const Dashboard = () => {
                 cancelText="Cancel"
             />
             
-            <div className="mt-5">
-                <CalendarView transactions={transactions} />
-            </div>
+            {showCalendar && (
+                <div className="mt-5">
+                    <CalendarView transactions={transactions} />
+                </div>
+            )}
         </div>
 
     );

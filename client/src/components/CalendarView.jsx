@@ -19,23 +19,32 @@ const CalendarView = ({ transactions }) => {
   const total = dailyTransactions.reduce((acc, t) => acc + t.amount, 0);
 
   return (
-    <div className="mt-5 d-flex flex-column align-items-center">
-      <h4 className="text-center">Calendar View</h4>
+    <div className="calendar-container">
+      <h4 className="text-center mb-4">📅 Calendar View</h4>
 
-      <div className="d-flex justify-content-center w-100">
+      <div className="d-flex justify-content-center w-100 mb-4">
         <div style={{ maxWidth: 380, width: '100%' }}>
           <Calendar onChange={setSelectedDate} value={selectedDate} />
         </div>
       </div>
 
-      <div className="mt-3" style={{ maxWidth: 800, width: '100%' }}>
-        <h5 className="text-center">Transactions on {format(selectedDate, "PP")}</h5>
-        <p className="text-center">Total: {total} OMR</p>
+      <div className="calendar-transactions">
+        <h5 className="text-center mb-3">Transactions on {format(selectedDate, "PP")}</h5>
+        <p className={`text-center fw-bold fs-5 mb-3 ${total < 0 ? 'text-danger' : 'text-success'}`}>
+          Total: {total.toFixed(2)} OMR
+        </p>
         <ul className="list-group">
-          {dailyTransactions.length === 0 && <li className="list-group-item">No transactions</li>}
+          {dailyTransactions.length === 0 && (
+            <li className="list-group-item text-center text-muted">No transactions for this day</li>
+          )}
           {dailyTransactions.map((t) => (
-            <li key={t._id} className="list-group-item">
-              {t.amount} OMR {t.description && `- ${t.description}`}
+            <li key={t._id} className={`list-group-item d-flex justify-content-between align-items-center ${Number(t.amount) < 0 ? 'border-start border-danger border-3' : 'border-start border-success border-3'}`}>
+              <div>
+                <strong className={Number(t.amount) < 0 ? 'text-danger' : 'text-success'}>
+                  {Number(t.amount) < 0 ? '−' : '+'}{Math.abs(t.amount).toFixed(2)} OMR
+                </strong>
+                {t.description && <div className="text-muted small">{t.description}</div>}
+              </div>
             </li>
           ))}
         </ul>

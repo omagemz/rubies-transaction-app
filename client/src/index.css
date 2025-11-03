@@ -2,7 +2,6 @@
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
 }
 
 body {
@@ -23,19 +22,73 @@ body {
   }
 }
 
-/* Balance display */
-.balance {
+/* Header with theme toggle */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.app-title {
+  font-size: 1.8rem;
   font-weight: 700;
-  font-size: 1.5rem;
-  margin: 1rem 0;
-  padding: 0.75rem;
+  margin: 0;
+}
+
+/* Balance Card - Centered */
+.balance-card {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.balance-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.balance-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
+.balance-amount.positive {
+  color: #4ade80;
+}
+
+.balance-amount.negative {
+  color: #f87171;
+}
+
+/* Add Transaction Button */
+.btn-add {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
   border-radius: 8px;
+}
+
+/* Table Container */
+.table-container {
+  margin-bottom: 3rem;
 }
 
 /* Transaction cards for mobile */
 .transaction-card {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 0.75rem;
 }
 
 /* Mobile buttons - larger touch targets */
@@ -43,6 +96,11 @@ body {
   .btn-sm {
     min-height: 40px;
     padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .balance-amount {
+    font-size: 2rem;
   }
 }
 
@@ -61,19 +119,102 @@ body {
 }
 
 .calendar-container h4 {
-  color: white;
+  color: white !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  margin-bottom: 1.5rem;
+}
+
+.calendar-container h5 {
+  color: white !important;
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
+/* Calendar widget styling */
+.react-calendar {
+  background: white;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.react-calendar__tile {
+  color: #1a1a1a !important;
+  padding: 0.75rem;
+}
+
+.react-calendar__month-view__weekdays {
+  color: #666 !important;
+}
+
+.react-calendar__tile--active {
+  background: #667eea !important;
+  color: white !important;
+}
+
+.react-calendar__tile:enabled:hover {
+  background: #e0e7ff !important;
+}
+
+.react-calendar__navigation button {
+  color: #1a1a1a !important;
+}
+
+/* Calendar transactions section */
 .calendar-transactions {
   background: white;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.5rem;
   margin-top: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+.calendar-transactions h5 {
+  color: #1a1a1a !important;
+  text-shadow: none !important;
+}
+
+.calendar-transactions p {
+  color: #1a1a1a !important;
+}
+
+.calendar-transactions .list-group-item {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+}
+
+/* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .calendar-transactions {
+    background: #2d2d2d;
+  }
+  
+  .calendar-transactions h5,
+  .calendar-transactions p {
+    color: #ffffff !important;
+  }
+  
+  .calendar-transactions .list-group-item {
     background: #1a1a1a;
+    border-color: #404040;
+    color: #ffffff;
+  }
+  
+  .react-calendar {
+    background: #2d2d2d;
+  }
+  
+  .react-calendar__tile {
+    color: #ffffff !important;
+  }
+  
+  .react-calendar__month-view__weekdays {
+    color: #b8b8b8 !important;
+  }
+  
+  .react-calendar__navigation button {
+    color: #ffffff !important;
   }
 }

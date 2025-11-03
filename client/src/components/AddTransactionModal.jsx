@@ -68,6 +68,23 @@ const AddTransactionModal = ({ isOpen, toggle, editData }) => {
               min="0.01"
               disabled={isSubmitting}
             />
+            <div className="mt-2">
+              <small className="text-muted">Quick add:</small>
+              <div className="mt-1">
+                {[4, 10, 15].map((amt) => (
+                  <Button
+                    key={amt}
+                    color="light"
+                    size="sm"
+                    className="me-2 mb-2"
+                    onClick={() => setAmount(amt)}
+                    disabled={isSubmitting}
+                  >
+                    {amt} OMR
+                  </Button>
+                ))}
+              </div>
+            </div>
           </FormGroup>
           <FormGroup tag="fieldset">
             <Label>Type</Label>
@@ -111,7 +128,7 @@ const AddTransactionModal = ({ isOpen, toggle, editData }) => {
             <div className="mt-2">
               <small className="text-muted">Quick add:</small>
               <div className="mt-1">
-                {['🚬Cigarettes','🍔Talabat','🍹Drinks'].map((p) => (
+                {['🛒 Groceries','🍔 Talabat','📦 Others'].map((p) => (
                   <Button
                     key={p}
                     color="light"
